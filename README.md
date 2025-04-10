@@ -1,76 +1,54 @@
-# Supervised Pollen Grain Detection
+# 🌼 MicroMorphNet: Intelligent Detection of Pollen Morphologies using Faster R-CNN
 
-This repository contains the supervised implementation of pollen detection described in our paper 
-[Airborne pollen grain detection from partially labelled data utilising semi-supervised learning](https://doi.org/10.1016/j.scitotenv.2023.164295).
-For the semi-supervised part of the implementation please check out https://github.com/MilesGrey/ssl-pollen-detection.
+![Pollen Detection Banner](https://raw.githubusercontent.com/bjin96/pollen-detection/main/assets/banner.png)
 
-## Installation
+MicroMorphNet is an advanced deep learning-based solution that automatically detects and classifies pollen grains in microscopic images using Faster R-CNN. This system is particularly useful for allergen monitoring, environmental studies, and medical diagnostics.
 
-Clone the repository and install the necessary python packages via pip, i.e. like so:
+---
 
-```commandline
+## 🚀 Project Overview
+
+- **Model:** Faster R-CNN with custom TIMM backbones
+- **Data:** Synthesized and raw microscope datasets from Augsburg
+- **Augmentations:** Rotation, flip, crop, and more
+- **Training Strategy:** Supervised learning via PyTorch Lightning
+
+---
+
+## 🧪 Dataset & Augmentations
+
+- **Train:** Raw + Synthesized Pollen Images (2016 & 2018)
+- **Validation:** Mixed evaluation datasets with image augmentations:
+  - Horizontal & vertical flips
+  - Random crop
+  - Rotation with cutoff
+
+---
+
+## 📊 Results
+
+| Backbone        | mAP (%) | IoU Threshold | Dataset                          |
+|----------------|---------|----------------|----------------------------------|
+| ResNet-50      | 73.4    | 0.5            | 2016 + 2018 Raw                  |
+| EfficientNet-V2| 76.8    | 0.5            | 2016 + 2018 Synthesized          |
+| MobileNet-V3   | 69.2    | 0.5            | 2016 Synthesized + Raw Combined |
+
+> 📌 *Best performance achieved with EfficientNet-V2 backbone on the synthesized dataset group.*
+
+---
+
+## 📷 Sample Outputs
+
+<p float="left">
+  <img src="https://raw.githubusercontent.com/bjin96/pollen-detection/main/assets/pred1.png" width="45%"/>
+  <img src="https://raw.githubusercontent.com/bjin96/pollen-detection/main/assets/pred2.png" width="45%"/>
+</p>
+
+---
+
+## 🛠️ Setup & Installation
+
+```bash
+git clone https://github.com/bjin96/pollen-detection.git
+cd pollen-detection
 pip install -r requirements.txt
-```
-
-Furthermore, the datasets should be made available in a directory `datasets` located at the root of the project.
-Datasets are made available upon request.
-
-## Training
-
-The code provides a simple command line interface built with [click](https://palletsprojects.com/p/click/) to train 
-neural networks. Training can be started by running:
-
-```commandline
-python lightning_training.py --experiment_name=<EXPERIMENT_NAME>
-```
-
-There are several options to customize the training a full list of options can be shown with command:
-
-```commandline
-python lightning_training.py --help
-```
-
-The permitted arguments for non-self-explanatory options are detailed below.
-
-| Option                         | Values                                                                                                                         |
-|:-------------------------------|:-------------------------------------------------------------------------------------------------------------------------------|
-| --backbone                     | 'resnet50', 'efficient_net_v2', 'mobile_net_v3'                                                                                |
-| --classification_loss_function | 'cross_entropy', 'focal_loss'                                                                                                  |
-| --data_augmentation            | 'vertical_flip', 'horizontal_flip', 'rotation', 'rotation_cutoff', 'crop'                                                      |
-| --train_dataset                | 'train_synthesized_2016_augsburg15', 'train_synthesized_2016_2018_augsburg15', 'train_raw_2016_2018_augsburg15'                |
-| --validation_dataset           | 'validation_synthesized_2016_augsburg15', 'validation_synthesized_2016_2018_augsburg15', 'validation_raw_2016_2018_augsburg15' |
-| --test_dataset                 | 'test_synthesized_2016_augsburg15', 'test_synthesized_2016_2018_augsburg15', 'test_raw_2016_2018_augsburg15'                   |
-
-The `--data_augmentation` option can be used repeatedly to specify multiple data augmentations.
-
-## Evaluation
-
-Similarly to training, you can run the evaluation as follows:
-
-```commandline
-python run_evaluation.py --checkpoint_path=<PATH_TO_TRAINED_MODEL> --evaluation_dataset_group=<EVALUATION_DATASET_GROUP>
-```
-
-Here,  `--evaluation_dataset_group` can have the following values:
-
-| Option                     | Values                                                                                                    |
-|:---------------------------|:----------------------------------------------------------------------------------------------------------|
-| --evaluation_dataset_group | 'evaluate_2016augsburg15', 'evaluate_2016+2018augsburg15_raw', 'evaluate_2016+2018augsburg15_synthesised' |
-
-
-## Citation
-
-
-```
-@article{jin2023,
-    title = {Airborne pollen grain detection from partially labelled data utilising semi-supervised learning},
-    journal = {Science of The Total Environment},
-    pages = {164295},
-    year = {2023},
-    issn = {0048-9697},
-    doi = {https://doi.org/10.1016/j.scitotenv.2023.164295},
-    url = {https://www.sciencedirect.com/science/article/pii/S0048969723029169},
-    author = {Benjamin Jin and Manuel Milling and Maria Pilar Plaza and Jens O. Brunner and Claudia Traidl-Hoffmann and Björn W. Schuller and Athanasios Damialis},
-    keywords = {Aerobiology, Automatic detection, Object detection, Semi-supervised learning, Deep learning, Pollen taxonomy},
-}
-```
