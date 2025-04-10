@@ -72,10 +72,10 @@ python run_evaluation.py --checkpoint_path=path/to/model.ckpt --evaluation_datas
 ## 👨‍💻 Author
 
 **Nidhish Chettri**  
-B.Tech CSE (2nd Year)  
+B.Tech Information Technology and Engineering (2nd Year)  
 Maharaja Agrasen Institute of Technology, Delhi  
 
-Connect on [LinkedIn](https://www.linkedin.com/) | Drop a ⭐ if you find this useful!
+Connect on [LinkedIn]([https://www.linkedin.com/](https://www.linkedin.com/in/nidhish-chettri-b0378428b/)) | Drop a ⭐ if you find this useful!
 
 ---
 
